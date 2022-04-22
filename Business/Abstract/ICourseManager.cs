@@ -11,6 +11,7 @@ namespace Business.Abstract
     public interface ICourseManager
     {
         List<CourseListDto> GetAll();
+        CourseListDto GetById(int id);
         void Add(CourseDTOs course);
         void Remove(int id);
         void Update(CourseDTOs course);

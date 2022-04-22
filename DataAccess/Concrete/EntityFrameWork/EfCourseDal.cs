@@ -51,13 +51,44 @@ namespace DataAccess.Concrete.EntityFrameWork
             context.SaveChanges();
         }
 
+        public CourseListDto GetCourse(int id)
+        {
+            using UdMyDbContext context = new();
+            var cr = context.Courses
+                .Include(c=>c.CourseSpecifactions)
+                .ThenInclude(c=>c.Specifaction)
+                .Include(cs => cs.Instructor)
+                .Include(c=>c.Lessons)
+                .FirstOrDefault(c => c.Id == id);
+
+            var courseDto = new CourseListDto(cr.Id, cr.Name, cr.Summary, cr.Description,
+                cr.PhotoUrl, cr.Price, cr.Discount,
+            cr.IsFeatured, cr.Reyting, cr.CategoryId,
+            cr.Instructor.FullName,
+            cr.Instructor.ProfilImg, cr.PublishDate)
+            {
+                SpecificationList = cr.CourseSpecifactions.Select(crs => new SpecificationDTOs
+                {
+                    Icon = crs.Specifaction.Icon,
+                    Value = crs.Specifaction.Value
+                }).ToList(),
+                Lessons = cr.Lessons.Select(c => new LessonDTOs()
+                {
+                    LessonId = c.Id,
+                    Name = c.Name
+                }).ToList()
+            };
+
+            return courseDto;
+        }
+
         public List<CourseListDto> ListCourses()
         {
             using UdMyDbContext context = new();
             var courseList = new List<CourseListDto>();
             var myCourses = context.Courses
-                .Select(cr => new CourseListDto(cr.Id,cr.Name, cr.Summary,cr.Description,cr.PhotoUrl,cr.Price,cr.Discount,
-                cr.IsFeatured,cr.Reyting,cr.CategoryId,cr.Instructor.FullName,cr.Instructor.ProfilImg,cr.PublishDate)
+                .Select(cr => new CourseListDto(cr.Id, cr.Name, cr.Summary, cr.Description, cr.PhotoUrl, cr.Price, cr.Discount,
+                cr.IsFeatured, cr.Reyting, cr.CategoryId, cr.Instructor.FullName, cr.Instructor.ProfilImg, cr.PublishDate)
                 {
                     SpecificationList = cr.CourseSpecifactions.Select(crs => new SpecificationDTOs
                     {

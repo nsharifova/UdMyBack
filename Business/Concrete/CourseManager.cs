@@ -29,6 +29,11 @@ namespace Business.Concrete
             return _coursedal.ListCourses();
         }
 
+        public CourseListDto GetById(int id)
+        {
+            return _coursedal.GetCourse(id);
+        }
+
         public void Remove(int id)
         {
             throw new NotImplementedException();

@@ -20,9 +20,10 @@ namespace UdmyApi.Controllers
 
         // GET api/<CourseController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public CourseListDto Get(int? id)
         {
-            return "value";
+            if(id==null) return null;
+            return _courseManager.GetById(id.Value);
         }
         [HttpGet()]
         public List<CourseListDto> GetAll()
