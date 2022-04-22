@@ -24,9 +24,9 @@ namespace Business.Concrete
             _coursedal.AddCourseWithLesson(dtoCourse);
         }
 
-        public List<Course> GetAll()
+        public List<CourseListDto> GetAll()
         {
-            return _coursedal.GetAll();
+            return _coursedal.ListCourses();
         }
 
         public void Remove(int id)
@@ -38,5 +38,7 @@ namespace Business.Concrete
         {
             throw new NotImplementedException();
         }
+
+ 
     }
 }

@@ -10,7 +10,7 @@ namespace Business.Abstract
 {
     public interface ICourseManager
     {
-        List<Course> GetAll();
+        List<CourseListDto> GetAll();
         void Add(CourseDTOs course);
         void Remove(int id);
         void Update(CourseDTOs course);

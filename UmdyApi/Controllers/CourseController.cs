@@ -18,21 +18,14 @@ namespace UdmyApi.Controllers
             _courseManager = courseManager;
         }
 
-        // GET: api/<CourseController>
-        [HttpGet]
-        public IEnumerable<Course> Get()
-        {
-            return _courseManager.GetAll();
-        }
-
         // GET api/<CourseController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
-        [HttpGet("GetAll")]
-        public List<Course> GetAll()
+        [HttpGet()]
+        public List<CourseListDto> GetAll()
         {
             return _courseManager.GetAll();
         }

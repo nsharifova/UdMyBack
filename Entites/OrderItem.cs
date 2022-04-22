@@ -8,6 +8,6 @@ namespace Entites
         public int OrderID { get; set; }
         public int CourseId { get; set; }
         public bool IsRefunded { get; set; }
-        public virtual Course? Course { get; set; }
+        //public virtual Course? Course { get; set; }
     }
 }
