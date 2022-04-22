@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFrameWork
 {
-    public class EfCategoryDal : EFEntityRepositoryBase<UdMyDbContext, Category>, ICategoryDal
+    public class EfCategoryDal : EFEntityRepositoryBase<UdMyDbContext,Category>, ICategoryDal
     {
-        
     }
 }

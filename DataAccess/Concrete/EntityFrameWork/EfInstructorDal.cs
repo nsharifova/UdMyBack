@@ -11,5 +11,6 @@ namespace DataAccess.Concrete.EntityFrameWork
 {
     public class EfInstructorDal :EFEntityRepositoryBase<UdMyDbContext,Instructor>,IInstructorDal
     {
+
     }
 }

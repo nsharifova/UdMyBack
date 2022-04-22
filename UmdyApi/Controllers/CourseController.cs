@@ -20,9 +20,9 @@ namespace UdmyApi.Controllers
 
         // GET: api/<CourseController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Course> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _courseManager.GetAll();
         }
 
         // GET api/<CourseController>/5

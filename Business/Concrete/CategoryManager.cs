@@ -24,7 +24,6 @@ namespace Business.Concrete
             Category cat = new()
             {
                 Name = category.Name,
-                IsDeleted = category.IsDeleted,
                 IsFeatured = category.IsFeatured,
                 ParentCategoryId = category.ParentCategoryId,
                 ModifadeOn = DateTime.Now,
@@ -39,7 +38,9 @@ namespace Business.Concrete
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            var findCategory = _dal.Get(c => c.Id == id);
+            findCategory.IsDeleted = true;
+            _dal.Update(findCategory);
         }
 
         public void Update(Category category)
