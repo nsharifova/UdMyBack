@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Entites.DTOs
 {
-    public class CategoryDTO
+    public class CategoryListDTO
     {
-        public int? ParentCategoryId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; } = null!;
         public bool IsFeatured { get; set; }
+        public int? ParentCategoryId { get; set; }
     }
 }
-//

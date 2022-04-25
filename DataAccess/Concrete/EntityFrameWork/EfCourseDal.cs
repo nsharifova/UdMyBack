@@ -55,6 +55,7 @@ namespace DataAccess.Concrete.EntityFrameWork
         {
             using UdMyDbContext context = new();
             var cr = context.Courses
+                .Include(c=>c.Category)
                 .Include(c=>c.CourseSpecifactions)
                 .ThenInclude(c=>c.Specifaction)
                 .Include(cs => cs.Instructor)
@@ -63,7 +64,7 @@ namespace DataAccess.Concrete.EntityFrameWork
 
             var courseDto = new CourseListDto(cr.Id, cr.Name, cr.Summary, cr.Description,
                 cr.PhotoUrl, cr.Price, cr.Discount,
-            cr.IsFeatured, cr.Reyting, cr.CategoryId,
+            cr.IsFeatured, cr.Reyting, cr.Category.Name,
             cr.Instructor.FullName,
             cr.Instructor.ProfilImg, cr.PublishDate)
             {
@@ -88,7 +89,7 @@ namespace DataAccess.Concrete.EntityFrameWork
             var courseList = new List<CourseListDto>();
             var myCourses = context.Courses
                 .Select(cr => new CourseListDto(cr.Id, cr.Name, cr.Summary, cr.Description, cr.PhotoUrl, cr.Price, cr.Discount,
-                cr.IsFeatured, cr.Reyting, cr.CategoryId, cr.Instructor.FullName, cr.Instructor.ProfilImg, cr.PublishDate)
+                cr.IsFeatured, cr.Reyting, cr.Category.Name, cr.Instructor.FullName, cr.Instructor.ProfilImg, cr.PublishDate)
                 {
                     SpecificationList = cr.CourseSpecifactions.Select(crs => new SpecificationDTOs
                     {

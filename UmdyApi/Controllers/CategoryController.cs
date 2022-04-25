@@ -18,9 +18,15 @@ namespace UdmyApi.Controllers
         }
 
         [HttpGet("getall")]
-        public List<Category> GetCategories()
+        public List<CategoryWithChildernDTO> GetCategories()
         {
             return _categoryManager.GetAll();
+        }
+        [HttpGet("getchildrens/{parentId}")]
+        public List<CategoryListDTO>? GetChildrens(int? parentId)
+        {
+            if (parentId == null) return null;
+            return _categoryManager.GetChildrenByParentId(parentId.Value);
         }
         [HttpPost("Add")]
         public CategoryDTO Add(CategoryDTO category)

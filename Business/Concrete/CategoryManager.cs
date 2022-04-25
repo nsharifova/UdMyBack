@@ -31,9 +31,14 @@ namespace Business.Concrete
             _dal.Add(cat);
         }
 
-        public List<Category> GetAll()
+        public List<CategoryWithChildernDTO> GetAll()
         {
-            return _dal.GetAll();
+            return _dal.GetCategoryWithChildrens();
+        }
+
+        public List<CategoryListDTO> GetChildrenByParentId(int parentId)
+        {
+            return _dal.GetCategoryChildrenByID(parentId);
         }
 
         public void Remove(int id)

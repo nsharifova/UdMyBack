@@ -9,7 +9,8 @@ namespace Entites.DTOs
     public class CourseListDto
     {
         public CourseListDto(int CourseId,string Name,string Summary,string Description,
-            string PhotoUrl,decimal Price,decimal? Discount,bool IsFeatured,decimal? Reyting,int CategoryId,
+            string PhotoUrl,decimal Price,decimal? Discount,bool IsFeatured,decimal? Reyting,
+            string CategoryName,
             string InstructorName,string InstructorPhoto,DateTime PublishDate)
 
         {
@@ -22,7 +23,7 @@ namespace Entites.DTOs
             this.Discount = Discount;
             this.IsFeatured = IsFeatured;
             this.Reyting = Reyting;
-            this.CategoryId = CategoryId;
+            this.CategoryName = CategoryName;
             this.InstructorName = InstructorName;
             this.InstructorPhoto = InstructorPhoto;
             this.PublishDate = PublishDate;
@@ -39,7 +40,7 @@ namespace Entites.DTOs
         public bool IsFeatured { get; set; }
         public decimal? Reyting { get; set; }
         public string? TrailerUrl { get; set; }
-        public int CategoryId { get; set; }
+        public string  CategoryName { get; set; }
         public string InstructorName { get; set; }
         public string? InstructorPhoto { get; set; }
         public DateTime PublishDate { get; set; }
