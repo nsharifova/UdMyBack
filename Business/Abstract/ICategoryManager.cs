@@ -10,9 +10,8 @@ namespace Business.Abstract
 {
     public interface ICategoryManager
     {
-       List<CategoryWithChildernDTO> GetAll();
+        List<CategoryWithChildernDTO> GetAll();
         List<CategoryListDTO> GetChildrenByParentId(int parentId);
-
         void Add(CategoryDTO categoryDTO);
         void Update(Category category);
         void Remove(int id);

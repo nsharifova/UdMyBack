@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entites;
+using Entites.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,11 @@ namespace Business.Concrete
         public List<Instructor> GetAll()
         {
             return _dal.GetAll();
+        }
+
+        public List<InstructorCourseDTO> GetCourseForInstructor(int instructorId)
+        {
+          return  _dal.InstructorCoursesById(instructorId);
         }
 
         public void Remove(int id)

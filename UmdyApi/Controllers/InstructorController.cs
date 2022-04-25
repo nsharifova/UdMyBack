@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entites;
+using Entites.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -22,6 +23,13 @@ namespace UdmyApi.Controllers
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
+        }
+
+        [HttpGet("findCourse/{instructorId}")]
+        public List<InstructorCourseDTO>? GetCourseByInstructor(int? instructorId)
+        {
+            if (!instructorId.HasValue) return null;
+            return _instructorManager.GetCourseForInstructor(instructorId.Value);
         }
 
         // GET api/<InstructorController>/5

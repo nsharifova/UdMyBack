@@ -1,4 +1,5 @@
 ﻿using Entites;
+using Entites.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Business.Abstract
     public interface IInstructorManager
     {
         List<Instructor> GetAll();
+        List<InstructorCourseDTO> GetCourseForInstructor(int instructorId);
         void Add(Instructor instructor);
         void Update(Instructor instructor);
         void Remove(int id);

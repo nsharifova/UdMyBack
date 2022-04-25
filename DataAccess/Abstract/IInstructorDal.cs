@@ -1,5 +1,6 @@
 ﻿using Core;
 using Entites;
+using Entites.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace DataAccess.Abstract
 {
     public interface IInstructorDal :IEntityRepository<Instructor>
     {
+        public List<InstructorCourseDTO> InstructorCoursesById(int? instructorId);
     }
 }
