@@ -38,8 +38,7 @@ builder.Services.AddCors(options =>
                 .WithMethods("PUT", "DELETE", "GET");
 
         }
-            );
-
+     );
 });
 var app = builder.Build();
 

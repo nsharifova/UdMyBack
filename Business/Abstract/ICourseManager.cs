@@ -12,6 +12,7 @@ namespace Business.Abstract
     {
         List<CourseListDto> GetAll();
         CourseListDto GetById(int id);
+        List<CourseListDto> GetCoursesByCategory(int categoryId);
         void Add(CourseDTOs course);
         void Remove(int id);
         void Update(CourseDTOs course);

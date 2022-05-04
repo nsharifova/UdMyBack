@@ -14,5 +14,6 @@ namespace DataAccess.Abstract
         public void AddCourseWithLesson(CourseDTOs courseDTOs);
         public List<CourseListDto> ListCourses();
         public CourseListDto GetCourse(int id);
+        public List<CourseListDto> GetCourseByCategory(int categoryId);
     }
 }

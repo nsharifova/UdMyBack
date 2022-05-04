@@ -83,6 +83,18 @@ namespace DataAccess.Concrete.EntityFrameWork
             return courseDto;
         }
 
+        public List<CourseListDto> GetCourseByCategory(int categoryId)
+        {
+            using UdMyDbContext context = new();
+            return context.Courses.Where(c => c.CategoryId == categoryId)
+                .Include(c => c.Category).Include(c => c.Instructor)
+                .Select(c=>new CourseListDto(c.Id,c.Name,c.Summary,c.Description,
+                c.PhotoUrl,c.Price,
+                c.Discount,c.IsFeatured,c.Reyting,c.Category.Name,c.Instructor.FullName,c.Instructor.ProfilImg,
+                c.PublishDate)).ToList();
+                
+        }
+
         public List<CourseListDto> ListCourses()
         {
             using UdMyDbContext context = new();

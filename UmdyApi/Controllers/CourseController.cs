@@ -30,7 +30,13 @@ namespace UdmyApi.Controllers
         {
             return _courseManager.GetAll();
         }
-        
+        [HttpGet("category/{categoryId}")]
+        public List<CourseListDto>? GetCourseByCategory(int? categoryId)
+        {
+            if (!categoryId.HasValue) return null;
+            return _courseManager.GetCoursesByCategory(categoryId.Value);
+        }
+
         // POST api/<CourseController>
         [HttpPost]
         public JsonResult Add(CourseDTOs course)
