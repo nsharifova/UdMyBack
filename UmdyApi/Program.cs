@@ -24,7 +24,7 @@ builder.Services.AddScoped<ILessonDal, EfLessonDal>();
 builder.Services.AddScoped<ILessonManager, LessonManager>();
 builder.Services.AddScoped<ILessonVideoDal, EfLessonVideoDal>();
 builder.Services.AddScoped<ILessonVideoManager, LessonVideoManager>();
-
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(

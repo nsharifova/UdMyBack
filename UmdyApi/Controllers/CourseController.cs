@@ -1,4 +1,6 @@
-﻿using Business.Abstract;
+﻿using Abp.Domain.Uow;
+using AutoMapper;
+using Business.Abstract;
 using Entites;
 using Entites.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +14,11 @@ namespace UdmyApi.Controllers
     public class CourseController : ControllerBase
     {
         private readonly ICourseManager _courseManager;
-
-        public CourseController(ICourseManager courseManager)
+        private readonly IMapper _mapper;
+        public CourseController(ICourseManager courseManager, IMapper mapper)
         {
             _courseManager = courseManager;
+            _mapper = mapper;
         }
 
         // GET api/<CourseController>/5
@@ -39,12 +42,14 @@ namespace UdmyApi.Controllers
 
         // POST api/<CourseController>
         [HttpPost]
-        public JsonResult Add(CourseDTOs course)
+        public async Task<JsonResult> Add(CourseDTOs course)
         {
             JsonResult res = new(new { });
             try
             {
-                _courseManager.Add(course);
+                var _mapperCourse=_mapper.Map<Course>(course);
+                //await unitOfWork.CompleteAsync();
+                _courseManager.Add(_mapperCourse);
                 res.Value = new { status = 200, success = course };
             }
             catch (Exception e)
@@ -57,10 +62,18 @@ namespace UdmyApi.Controllers
 
         // PUT api/<CourseController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public JsonResult Put(int? id, [FromBody] CourseDTOs courseDT)
         {
+            JsonResult res = new(new { });
+            if (id == null) {
+                res.Value = new {status=403,message="Id is required" };
+                return res;
+            };
+            _courseManager.Update(id.Value, courseDT);
+            res.Value = new { status = 200, message = "Successfully updated" };
+            return res;
         }
-
+        
         // DELETE api/<CourseController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)

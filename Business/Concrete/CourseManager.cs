@@ -19,7 +19,7 @@ namespace Business.Concrete
             _coursedal = coursedal;
         }
 
-        public void Add(CourseDTOs dtoCourse)
+        public void Add(Course dtoCourse)
         {
             _coursedal.AddCourseWithLesson(dtoCourse);
         }
@@ -41,12 +41,17 @@ namespace Business.Concrete
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            var getCourse= _coursedal.Get(c => c.Id == id && !c.IsDeleted);
+            if (getCourse != null)
+            {
+                getCourse.IsDeleted = true;
+                _coursedal.Update(getCourse);
+            }
         }
 
-        public void Update(CourseDTOs course)
+        public void Update(int id,CourseDTOs course)
         {
-            throw new NotImplementedException();
+            _coursedal.UpdateCourse(id, course);   
         }
 
  
