@@ -24,17 +24,17 @@ namespace Business.Concrete
             _coursedal.AddCourseWithLesson(dtoCourse);
         }
 
-        public List<CourseListDto> GetAll()
+        public List<Course> GetAll()
         {
             return _coursedal.ListCourses();
         }
 
-        public CourseListDto GetById(int id)
+        public Course GetById(int id)
         {
             return _coursedal.GetCourse(id);
         }
 
-        public List<CourseListDto> GetCoursesByCategory(int categoryId)
+        public List<Course> GetCoursesByCategory(int categoryId)
         {
            return _coursedal.GetCourseByCategory(categoryId);
         }
@@ -49,7 +49,7 @@ namespace Business.Concrete
             }
         }
 
-        public void Update(int id,CourseDTOs course)
+        public void Update(int id, Course course)
         {
             _coursedal.UpdateCourse(id, course);   
         }

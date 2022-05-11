@@ -26,15 +26,19 @@ namespace UdmyApi.Controllers
         public CourseListDto Get(int? id)
         {
             if(id==null) return null;
-            return _courseManager.GetById(id.Value);
+            var course = _courseManager.GetById(id.Value);
+            var courseMapper = _mapper.Map<Course, CourseListDto>(course);
+            return courseMapper;
         }
         [HttpGet()]
         public List<CourseListDto> GetAll()
         {
-            return _courseManager.GetAll();
+            var courseList = _courseManager.GetAll();
+            var courseMapper= _mapper.Map<List<Course>,List<CourseListDto>>(courseList);
+            return courseMapper;
         }
         [HttpGet("category/{categoryId}")]
-        public List<CourseListDto>? GetCourseByCategory(int? categoryId)
+        public List<Course>? GetCourseByCategory(int? categoryId)
         {
             if (!categoryId.HasValue) return null;
             return _courseManager.GetCoursesByCategory(categoryId.Value);
@@ -48,7 +52,6 @@ namespace UdmyApi.Controllers
             try
             {
                 var _mapperCourse=_mapper.Map<Course>(course);
-                //await unitOfWork.CompleteAsync();
                 _courseManager.Add(_mapperCourse);
                 res.Value = new { status = 200, success = course };
             }
@@ -64,12 +67,15 @@ namespace UdmyApi.Controllers
         [HttpPut("{id}")]
         public JsonResult Put(int? id, [FromBody] CourseDTOs courseDT)
         {
+            
             JsonResult res = new(new { });
             if (id == null) {
                 res.Value = new {status=403,message="Id is required" };
                 return res;
             };
-            _courseManager.Update(id.Value, courseDT);
+            var _mapperCourse = _mapper.Map<CourseDTOs,Course>(courseDT);
+
+            _courseManager.Update(id.Value, _mapperCourse);
             res.Value = new { status = 200, message = "Successfully updated" };
             return res;
         }

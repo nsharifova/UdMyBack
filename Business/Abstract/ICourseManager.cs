@@ -10,11 +10,11 @@ namespace Business.Abstract
 {
     public interface ICourseManager
     {
-        List<CourseListDto> GetAll();
-        CourseListDto GetById(int id);
-        List<CourseListDto> GetCoursesByCategory(int categoryId);
+        List<Course> GetAll();
+        Course GetById(int id);
+        List<Course> GetCoursesByCategory(int categoryId);
         void Add(Course course);
         void Remove(int id);
-        void Update(int id,CourseDTOs course);
+        void Update(int id, Course course);
     }
 }

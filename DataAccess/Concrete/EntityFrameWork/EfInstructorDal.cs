@@ -23,12 +23,9 @@ namespace DataAccess.Concrete.EntityFrameWork
                       InstructorName = ins.FullName,
                       InstructorPhoto = ins.ProfilImg,
                       CourseList = ins.Courses.Select(cs => 
-                      new CourseListDto(cs.Id, cs.Name, cs.Summary,
-                        cs.Description, cs.PhotoUrl, cs.Price, cs.Discount, cs.IsFeatured,
-                        cs.Reyting, cs.Category.Name, cs.Instructor.FullName,
-                        cs.Instructor.ProfilImg, cs.PublishDate)).ToList()
-
-                  }).ToList();
+                      new CourseListDto()).ToList()
+                  })
+                  .ToList();
 
         }
     }
