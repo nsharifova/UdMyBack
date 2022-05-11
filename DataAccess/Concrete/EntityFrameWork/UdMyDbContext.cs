@@ -12,7 +12,7 @@ namespace DataAccess.Concrete.EntityFrameWork
     {
         protected override void OnConfiguring(DbContextOptionsBuilder option)
         {
-            option.UseSqlServer(@"Server =.\;Database=UdMyDb;Trusted_Connection=true;MultipleActiveResultSets=True");
+            option.UseSqlServer(@"Server =.\;Database=K310ETreeckDB;Trusted_Connection=true;MultipleActiveResultSets=True");
         }
         public DbSet<Course> Courses { get; set; } = null!;
         public DbSet<Category> Categories { get; set; }

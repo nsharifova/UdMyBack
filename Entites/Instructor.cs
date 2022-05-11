@@ -12,8 +12,5 @@ namespace Entites
         public string ProfilImg { get; set; }
         public virtual List<Course>? Courses { get; set; }   
 
-
-
-
     }
 }
