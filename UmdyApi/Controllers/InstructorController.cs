@@ -1,4 +1,5 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using Entites;
 using Entites.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,11 @@ namespace UdmyApi.Controllers
     public class InstructorController : ControllerBase
     {
         private readonly IInstructorManager _instructorManager;
-
-        public InstructorController(IInstructorManager instructorManager)
+        private readonly IMapper _autoMapper;
+        public InstructorController(IInstructorManager instructorManager, IMapper autoMapper)
         {
             _instructorManager = instructorManager;
+            _autoMapper = autoMapper;
         }
 
         // GET: api/<InstructorController>
@@ -26,10 +28,12 @@ namespace UdmyApi.Controllers
         }
 
         [HttpGet("findCourse/{instructorId}")]
-        public List<InstructorCourseDTO>? GetCourseByInstructor(int? instructorId)
+        public InstructorCourseDTO? GetCourseByInstructor(int? instructorId)
         {
             if (!instructorId.HasValue) return null;
-            return _instructorManager.GetCourseForInstructor(instructorId.Value);
+            var instructorCourse = _instructorManager.GetCourseForInstructor(instructorId.Value);
+            var instMapper = _autoMapper.Map<Instructor,InstructorCourseDTO>(instructorCourse);
+            return instMapper;
         }
 
         // GET api/<InstructorController>/5

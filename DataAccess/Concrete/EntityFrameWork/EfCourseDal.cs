@@ -38,8 +38,9 @@ namespace DataAccess.Concrete.EntityFrameWork
         {
             using UdMyDbContext context = new();
             return context.Courses
-                .Where(c => c.CategoryId == categoryId)
-                .Include(c => c.Category)
+                .Where(c => c.CategoryId == categoryId || c.Category.ParentCategoryId==categoryId)
+                .Include(c => c.Category.ParentCategory)
+                //.ThenInclude(c=>c.ParentCategory)
                 .Include(c => c.Instructor)
                 .ToList();
         }

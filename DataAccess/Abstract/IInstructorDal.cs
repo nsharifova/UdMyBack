@@ -11,6 +11,6 @@ namespace DataAccess.Abstract
 {
     public interface IInstructorDal :IEntityRepository<Instructor>
     {
-        public List<InstructorCourseDTO> InstructorCoursesById(int? instructorId);
+        public Instructor? InstructorCoursesById(int instructorId);
     }
 }

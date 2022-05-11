@@ -38,10 +38,12 @@ namespace UdmyApi.Controllers
             return courseMapper;
         }
         [HttpGet("category/{categoryId}")]
-        public List<Course>? GetCourseByCategory(int? categoryId)
+        public List<CourseListDto>? GetCourseByCategory(int? categoryId)
         {
             if (!categoryId.HasValue) return null;
-            return _courseManager.GetCoursesByCategory(categoryId.Value);
+            var courseInfo = _courseManager.GetCoursesByCategory(categoryId.Value);
+            var courseMapper = _mapper.Map<List<CourseListDto>>(courseInfo);
+            return courseMapper;
         }
 
         // POST api/<CourseController>

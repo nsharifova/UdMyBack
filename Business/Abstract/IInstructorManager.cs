@@ -11,7 +11,7 @@ namespace Business.Abstract
     public interface IInstructorManager
     {
         List<Instructor> GetAll();
-        List<InstructorCourseDTO> GetCourseForInstructor(int instructorId);
+        Instructor? GetCourseForInstructor(int instructorId);
         void Add(Instructor instructor);
         void Update(Instructor instructor);
         void Remove(int id);

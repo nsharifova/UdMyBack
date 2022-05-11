@@ -29,7 +29,7 @@ namespace Business.Concrete
             return _dal.GetAll();
         }
 
-        public List<InstructorCourseDTO> GetCourseForInstructor(int instructorId)
+        public Instructor? GetCourseForInstructor(int instructorId)
         {
           return  _dal.InstructorCoursesById(instructorId);
         }
