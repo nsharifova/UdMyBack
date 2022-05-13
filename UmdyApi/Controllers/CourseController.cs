@@ -23,18 +23,18 @@ namespace UdmyApi.Controllers
 
         // GET api/<CourseController>/5
         [HttpGet("{id}")]
-        public CourseListDto Get(int? id)
+        public CourseListDto? Get(int? id)
         {
             if(id==null) return null;
             var course = _courseManager.GetById(id.Value);
-            var courseMapper = _mapper.Map<Course, CourseListDto>(course);
+            var courseMapper = _mapper.Map<CourseListDto>(course);
             return courseMapper;
         }
         [HttpGet()]
         public List<CourseListDto> GetAll()
         {
             var courseList = _courseManager.GetAll();
-            var courseMapper= _mapper.Map<List<Course>,List<CourseListDto>>(courseList);
+            var courseMapper= _mapper.Map<List<CourseListDto>>(courseList);
             return courseMapper;
         }
         [HttpGet("category/{categoryId}")]

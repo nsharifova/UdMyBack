@@ -21,12 +21,6 @@ namespace Entites.MyProfilers
                     dest => dest.CourseName,
                     opt => opt.MapFrom(src => src.Name)
                     )
-
-                .ForMember(
-                    dest => dest.Description,
-                    opt => opt.MapFrom(src => src.Description)
-                    )
-
                 .ForMember(
                     dest => dest.InstructorName,
                     opt => opt.MapFrom(src => src.Instructor.FullName)
@@ -35,37 +29,10 @@ namespace Entites.MyProfilers
                     dest => dest.InstructorPhoto,
                     opt => opt.MapFrom(src => src.Instructor.ProfilImg)
                     )
-
-                 .ForMember(
-                    dest => dest.Price,
-                    opt => opt.MapFrom(src => src.Price)
-                    )
-                 .ForMember(
-                    dest => dest.Discount,
-                    opt => opt.MapFrom(src => src.Discount)
-                    )
-                 .ForMember(
-                    dest => dest.PublishDate,
-                    opt => opt.MapFrom(src => src.PublishDate)
-                    )
+         
                  .ForMember(
                     dest => dest.CategoryName,
                     opt => opt.MapFrom(src => src.Category.Name)
-                    )
-
-                 .ForMember(
-                    dest => dest.Summary,
-                    opt => opt.MapFrom(src => src.Summary)
-                    )
-
-                 .ForMember(
-                    dest => dest.IsFeatured,
-                    opt => opt.MapFrom(src => src.IsFeatured)
-                    )
-
-                 .ForMember(
-                    dest => dest.Reyting,
-                    opt => opt.MapFrom(src => src.Reyting)
                     )
                  .ForMember(
                     dest => dest.Lessons,

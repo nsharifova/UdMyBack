@@ -1,4 +1,5 @@
 ﻿using Entites;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFrameWork
 {
-    public class UdMyDbContext : DbContext
+    public class UdMyDbContext : IdentityDbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder option)
         {
@@ -23,6 +24,9 @@ namespace DataAccess.Concrete.EntityFrameWork
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Specifaction> Specifactions { get; set; }
-
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
     }
 }
