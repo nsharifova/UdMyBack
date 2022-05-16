@@ -1,4 +1,5 @@
 ﻿using Entites;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,6 +15,7 @@ namespace DataAccess.Concrete.EntityFrameWork
         protected override void OnConfiguring(DbContextOptionsBuilder option)
         {
             option.UseSqlServer(@"Server =.\;Database=K310ETreeckDB;Trusted_Connection=true;MultipleActiveResultSets=True");
+        
         }
         public DbSet<Course> Courses { get; set; } = null!;
         public DbSet<Category> Categories { get; set; }
@@ -24,9 +26,11 @@ namespace DataAccess.Concrete.EntityFrameWork
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Specifaction> Specifactions { get; set; }
+        public DbSet<User> Users { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<IdentityUser>().ToTable("User");
         }
     }
 }
