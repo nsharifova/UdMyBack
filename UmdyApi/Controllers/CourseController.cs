@@ -3,6 +3,7 @@ using AutoMapper;
 using Business.Abstract;
 using Entites;
 using Entites.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -30,7 +31,8 @@ namespace UdmyApi.Controllers
             var courseMapper = _mapper.Map<CourseListDto>(course);
             return courseMapper;
         }
-        [HttpGet()]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpGet]
         public List<CourseListDto> GetAll()
         {
             var courseList = _courseManager.GetAll();
