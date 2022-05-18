@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Business.Concrete;
 using Entites;
 using Entites.DTOs;
 using Microsoft.AspNetCore.Authentication;
@@ -20,11 +21,13 @@ namespace UdmyApi.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
-        public AccountController(UserManager<User> userManager, IMapper mapper, IConfiguration config)
+        private readonly TokenManager _tokenManager;
+        public AccountController(UserManager<User> userManager, IMapper mapper, IConfiguration config, TokenManager tokenManager)
         {
             _userManager = userManager;
             _mapper = mapper;
             _config = config;
+            _tokenManager = tokenManager;
         }
 
         // GET: api/<AccountController>
@@ -58,42 +61,19 @@ namespace UdmyApi.Controllers
 
         // POST api/<AccountController>
         [HttpPost("login")]
-        public async Task<JsonResult> LoginUser([FromBody] LoginUserDTO userDTO)
+        public async Task<IActionResult> LoginUser([FromBody] LoginUserDTO userDTO)
         {
-            JsonResult res = new(new { });
             var findUser = await _userManager.FindByEmailAsync(userDTO.Email);
             var checkPassword = await _userManager.CheckPasswordAsync(findUser, userDTO.Password);
             if (findUser != null && checkPassword)
             {
 
-                var claims = new[]{
-                    new Claim(JwtRegisteredClaimNames.Sub,_config["Jwt:Subject"]),
-                    new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                     new Claim("UserId", findUser.Id.ToString()),
-                     new Claim("Firstname", findUser.Firstname.ToString()),
-                     new Claim("Lastname", findUser.Lastname.ToString()),
-                     new Claim("Email", findUser.Email.ToString()),
-                };
-
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-                var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                var token = new JwtSecurityToken(
-                    _config["Jwt:Issuer"],
-                    _config["Jwt:Audience"],
-                    claims,
-                    expires: DateTime.UtcNow.AddMinutes(10),
-                    signingCredentials: signIn
-                    );
-
-                var writeToken = new JwtSecurityTokenHandler().WriteToken(token);
-
-                res.Value = new { status=200,message=writeToken };
-                return res;
+                var myToken = _tokenManager.GenerateToken(findUser);
+                
+                return Ok(myToken);
             }
-            res.Value = new { status = 403, message = "Email ve ya parol yanlişdir" };
 
-            return res;
+            return Unauthorized();
 
         }
         //var identity = new ClaimsIdentity(IdentityConstants.ApplicationScheme);
