@@ -53,9 +53,9 @@ namespace UdmyApi.Controllers
             var result = await _userManager.CreateAsync(user, userDTO.Password);
             if (!result.Succeeded)
             {
-                return StatusCode(403);
+                return BadRequest();
             }
-            return StatusCode(201);
+            return Ok(new{status=201,message="user created" });
 
         }
 
@@ -70,7 +70,7 @@ namespace UdmyApi.Controllers
 
                 var myToken = _tokenManager.GenerateToken(findUser);
                 
-                return Ok(myToken);
+                return Ok(new {email=findUser.Email,token=myToken});
             }
 
             return Unauthorized();
