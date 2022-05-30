@@ -31,7 +31,7 @@ namespace UdmyApi.Controllers
             var courseMapper = _mapper.Map<CourseListDto>(course);
             return courseMapper;
         }
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet]
         public List<CourseListDto> GetAll()
         {

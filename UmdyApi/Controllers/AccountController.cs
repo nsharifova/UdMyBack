@@ -56,7 +56,6 @@ namespace UdmyApi.Controllers
                 return BadRequest();
             }
             return Ok(new{status=201,message="user created" });
-
         }
 
         // POST api/<AccountController>
