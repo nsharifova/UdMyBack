@@ -24,10 +24,10 @@ namespace UdmyApi.Controllers
 
         // GET api/<CourseController>/5
         [HttpGet("{id}")]
-        public CourseListDto? Get(int? id)
+        public  async Task<CourseListDto?> Get(int? id)
         {
             if(id==null) return null;
-            var course = _courseManager.GetById(id.Value);
+            var course = await _courseManager.GetById(id.Value);
             var courseMapper = _mapper.Map<CourseListDto>(course);
             return courseMapper;
         }
@@ -39,6 +39,17 @@ namespace UdmyApi.Controllers
             var courseMapper= _mapper.Map<List<CourseListDto>>(courseList);
             return courseMapper;
         }
+
+
+        [HttpPost("filter")]
+        public async Task<List<CourseListDto>>? GetFilterCourse([FromBody] string? searchTerm)
+        {
+            var courseList = await _courseManager.GetCourseWithFilter(searchTerm);
+            var courseMapper = _mapper.Map<List<CourseListDto>>(courseList);
+            return courseMapper;
+        }
+
+
         [HttpGet("category/{categoryId}")]
         public List<CourseListDto>? GetCourseByCategory(int? categoryId)
         {
@@ -47,6 +58,8 @@ namespace UdmyApi.Controllers
             var courseMapper = _mapper.Map<List<CourseListDto>>(courseInfo);
             return courseMapper;
         }
+
+
 
         // POST api/<CourseController>
         [HttpPost]

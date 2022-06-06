@@ -29,14 +29,19 @@ namespace Business.Concrete
             return _coursedal.ListCourses();
         }
 
-        public Course GetById(int id)
+        public async Task<Course> GetById(int id)
         {
-            return _coursedal.GetCourse(id);
+            return await _coursedal.GetCourse(id);
         }
 
         public List<Course> GetCoursesByCategory(int categoryId)
         {
            return _coursedal.GetCourseByCategory(categoryId);
+        }
+
+        public Task<List<Course>>? GetCourseWithFilter(string? q)
+        {
+            return _coursedal.FilterCourse(q);
         }
 
         public void Remove(int id)

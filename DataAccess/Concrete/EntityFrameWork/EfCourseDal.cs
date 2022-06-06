@@ -20,16 +20,16 @@ namespace DataAccess.Concrete.EntityFrameWork
             context.SaveChanges();
         }
 
-        public Course GetCourse(int id)
+        public async Task<Course> GetCourse(int id)
         {
             using UdMyDbContext context = new();
-            var singleCourse = context.Courses
+            var singleCourse =await  context.Courses
                 .Include(c => c.Category)
                 .Include(c => c.CourseSpecifactions)
                 .ThenInclude(c => c.Specifaction)
                 .Include(cs => cs.Instructor)
                 .Include(c => c.Lessons)
-                .FirstOrDefault(c => c.Id == id);
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             return singleCourse;
         }
@@ -59,16 +59,27 @@ namespace DataAccess.Concrete.EntityFrameWork
 
         }
 
-        public void UpdateCourse(int id, Course course)
+        public async Task<List<Course>> FilterCourse(string? searchTerm)
+        {
+            using UdMyDbContext context = new();
+            var myCourses = await context.Courses
+              .Where(c=>c.Name.Contains(searchTerm)) 
+              //|| c.Category.Name.Contains(searchTerm) 
+              //|| c.Instructor.FullName.Contains(searchTerm))
+              .Include(c => c.Instructor)
+              .Include(c => c.Category)
+              .ToListAsync();
+
+            return myCourses;
+        }
+        public async void UpdateCourse(int id, Course course)
         {
             using UdMyDbContext context = new();
             course.Id = id;
-            var singleCourse = GetCourse(id);
+            var singleCourse = await GetCourse(id);
             
             context.RemoveRange(singleCourse.CourseSpecifactions);
             //context.Specifactions.RemoveRange(singleCourse.CourseSpecifactions.Where(c=>c.CourseId==id).ToArray());
-
-
             context.Courses.Update(course);
             context.SaveChanges();
         }
