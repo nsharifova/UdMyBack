@@ -41,10 +41,10 @@ namespace UdmyApi.Controllers
         }
 
 
-        [HttpPost("filter")]
-        public async Task<List<CourseListDto>>? GetFilterCourse([FromBody] string? searchTerm)
+        [HttpGet("filter/{q}")]
+        public async Task<List<CourseListDto>>? GetFilterCourse(string? q)
         {
-            var courseList = await _courseManager.GetCourseWithFilter(searchTerm);
+            var courseList = await _courseManager.GetCourseWithFilter(q);
             var courseMapper = _mapper.Map<List<CourseListDto>>(courseList);
             return courseMapper;
         }
