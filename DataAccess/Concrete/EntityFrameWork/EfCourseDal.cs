@@ -63,9 +63,9 @@ namespace DataAccess.Concrete.EntityFrameWork
         {
             using UdMyDbContext context = new();
             var myCourses = await context.Courses
-              .Where(c=>c.Name.Contains(searchTerm)) 
-              //|| c.Category.Name.Contains(searchTerm) 
-              //|| c.Instructor.FullName.Contains(searchTerm))
+              .Where(c=>c.Name.Contains(searchTerm)
+              || c.Category.Name.Contains(searchTerm)
+              || c.Instructor.FullName.Contains(searchTerm))
               .Include(c => c.Instructor)
               .Include(c => c.Category)
               .ToListAsync();
