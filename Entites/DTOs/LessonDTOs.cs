@@ -10,5 +10,6 @@ namespace Entites.DTOs
     {
         public int LessonId { get; set; }
         public string Name { get; set; } = null!;
+        public List<LessonVideo> LessonVideos { get; set; }
     }
 }

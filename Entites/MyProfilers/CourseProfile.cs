@@ -37,7 +37,7 @@ namespace Entites.MyProfilers
                  .ForMember(
                     dest => dest.Lessons,
                     opt => opt.MapFrom(src => 
-                    src.Lessons.Select(c=>new LessonDTOs { LessonId=c.Id,Name=c.Name}))
+                    src.Lessons.Select(c=>new LessonDTOs { LessonId = c.Id, Name = c.Name, LessonVideos = c.LessonVideos }))
                     )
                  .ForMember(
                     dest => dest.SpecificationList,

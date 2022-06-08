@@ -29,6 +29,7 @@ namespace DataAccess.Concrete.EntityFrameWork
                 .ThenInclude(c => c.Specifaction)
                 .Include(cs => cs.Instructor)
                 .Include(c => c.Lessons)
+                .ThenInclude(c=>c.LessonVideos)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             return singleCourse;
