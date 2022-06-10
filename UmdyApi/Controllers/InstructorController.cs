@@ -22,9 +22,9 @@ namespace UdmyApi.Controllers
 
         // GET: api/<InstructorController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Instructor> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _instructorManager.GetAll();
         }
 
         [HttpGet("findCourse/{instructorId}")]

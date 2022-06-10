@@ -8,6 +8,5 @@ namespace Entites
         public string FullName { get; set; }=null!;
         public string ProfilImg { get; set; }
         public virtual List<Course>? Courses { get; set; }
-
     }
 }

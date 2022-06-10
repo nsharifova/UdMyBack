@@ -60,18 +60,53 @@ namespace DataAccess.Concrete.EntityFrameWork
 
         }
 
-        public async Task<List<Course>> FilterCourse(string? searchTerm)
+        public async Task<List<Course>> FilterCourse(string? searchTerm, decimal? rating, decimal? minPrice, decimal? maxPrice, int[] instructorIds,int? sortBy)
         {
             using UdMyDbContext context = new();
-            var myCourses = await context.Courses
-              .Where(c=>c.Name.Contains(searchTerm)
-              || c.Category.Name.Contains(searchTerm)
-              || c.Instructor.FullName.Contains(searchTerm))
-              .Include(c => c.Instructor)
-              .Include(c => c.Category)
-              .ToListAsync();
+            var myCourses =  context.Courses
+                .Include(c => c.Instructor)
+                .Include(c => c.Category)
+                .AsQueryable();
 
-            return myCourses;
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                myCourses = myCourses.Where(c => c.Name.Contains(searchTerm)
+             || c.Category.Name.Contains(searchTerm)
+             || c.Instructor.FullName.Contains(searchTerm));
+            }
+          
+            if(minPrice.HasValue && maxPrice.HasValue)
+            {
+                myCourses = myCourses.Where(c => c.Price >= minPrice && c.Price <= maxPrice);
+            }
+            if (rating.HasValue)
+            {
+                myCourses = rating.Value switch
+                {
+                    1 => myCourses.Where(c => c.Reyting >= 1 && c.Reyting <= 2),
+                    2 => myCourses.Where(c => c.Reyting >= 2 && c.Reyting <= 3),
+                    3 => myCourses.Where(c => c.Reyting >= 3 && c.Reyting <= 4),
+                    4 => myCourses.Where(c => c.Reyting >= 4 && c.Reyting <= 5),
+                    _ => myCourses.Where(c => c.Reyting >= 1 && c.Reyting <= 5),
+                };
+            }
+
+            if (instructorIds.Length > 0)
+            {
+                myCourses = myCourses.Where(c => instructorIds.Contains(c.InstructorId));
+            }
+
+            if (sortBy.HasValue)
+            {
+                myCourses = sortBy.Value switch
+                {
+                    0 => myCourses.OrderByDescending(c => c.Price),
+                    1 => myCourses.OrderBy(c => c.Price),
+                    _ => myCourses.OrderBy(c => c.PublishDate),
+                };
+            }
+
+            return await myCourses.ToListAsync();
         }
         public async void UpdateCourse(int id, Course course)
         {

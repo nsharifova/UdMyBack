@@ -13,6 +13,12 @@ namespace DataAccess.Concrete.EntityFrameWork
 {
     public class EfInstructorDal : EFEntityRepositoryBase<UdMyDbContext, Instructor>, IInstructorDal
     {
+        //public async Task<List<Instructor>> GetInstructorList()
+        //{
+        //    using UdMyDbContext context = new();
+        //    return await context.Instructors.ToListAsync();
+        //}
+
         public Instructor? InstructorCoursesById(int instructorId)
         {
             using UdMyDbContext context = new();

@@ -11,7 +11,7 @@ namespace Business.Abstract
     public interface ICourseManager
     {
         List<Course> GetAll();
-        Task<List<Course>>? GetCourseWithFilter(string? q);
+        Task<List<Course>>? GetCourseWithFilter(string? q, decimal? rating, decimal? minPrice, decimal? maxPrice, int[] instructorIds, int? sortBy);
         Task<Course> GetById(int id);
         List<Course> GetCoursesByCategory(int categoryId);
         void Add(Course course);

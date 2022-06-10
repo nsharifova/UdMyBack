@@ -14,7 +14,7 @@ namespace DataAccess.Abstract
         public void AddCourseWithLesson(Course courseDTOs);
         public List<Course> ListCourses();
         public Task<Course> GetCourse(int id);
-        public Task<List<Course>>? FilterCourse(string? searchTerm);
+        public Task<List<Course>>? FilterCourse(string? searchTerm,decimal? rating,decimal? minPrice,decimal? maxPrice,int[] instructorIds,int? sortBy);
         public void UpdateCourse(int id,Course courseDTOs);
         public List<Course> GetCourseByCategory(int categoryId);
     }
