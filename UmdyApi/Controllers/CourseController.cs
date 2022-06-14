@@ -41,10 +41,12 @@ namespace UdmyApi.Controllers
         }
 
 
+        //[HttpGet("filter/{q?}/{rating?}/{minPrice?}/{maxPrice?}/{instructorIds?}/{sortBy?}")]
         [HttpGet("filter/{q?}/{rating?}/{minPrice?}/{maxPrice?}/{instructorIds?}/{sortBy?}")]
-        public async Task<List<CourseListDto>>? GetFilterCourse(string? q, decimal? rating, decimal? minPrice, decimal? maxPrice, int[] instructorIds, int? sortBy)
+
+        public async Task<List<CourseListDto>>? GetFilterCourse(string? q, decimal? rating, decimal? minPrice, decimal? maxPrice, int? sortBy)
         {
-            var courseList = await _courseManager.GetCourseWithFilter(q, rating, minPrice, maxPrice, instructorIds, sortBy);
+            var courseList = await _courseManager.GetCourseWithFilter(q, rating, minPrice, maxPrice,new int[] { }, sortBy);
             var courseMapper = _mapper.Map<List<CourseListDto>>(courseList);
             return courseMapper;
         }
@@ -58,9 +60,6 @@ namespace UdmyApi.Controllers
             var courseMapper = _mapper.Map<List<CourseListDto>>(courseInfo);
             return courseMapper;
         }
-
-
-
         // POST api/<CourseController>
         [HttpPost]
         public async Task<JsonResult> Add(CourseDTOs course)

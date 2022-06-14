@@ -68,7 +68,7 @@ namespace DataAccess.Concrete.EntityFrameWork
                 .Include(c => c.Category)
                 .AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(searchTerm))
+            if (!string.IsNullOrWhiteSpace(searchTerm) && searchTerm!=null)
             {
                 myCourses = myCourses.Where(c => c.Name.Contains(searchTerm)
              || c.Category.Name.Contains(searchTerm)
