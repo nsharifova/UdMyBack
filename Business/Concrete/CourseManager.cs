@@ -39,9 +39,9 @@ namespace Business.Concrete
            return _coursedal.GetCourseByCategory(categoryId);
         }
 
-        public Task<List<Course>>? GetCourseWithFilter(string? q, decimal? rating, decimal? minPrice, decimal? maxPrice, int[] instructorIds, int? sortBy)
+        public Task<List<Course>>? GetCourseWithFilter(FilterCourseItem item)
         {
-            return _coursedal.FilterCourse(q, rating, minPrice, maxPrice,  instructorIds,sortBy);
+            return _coursedal.FilterCourse(item);
         }
 
         public void Remove(int id)

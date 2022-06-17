@@ -42,13 +42,19 @@ namespace UdmyApi.Controllers
 
 
         //[HttpGet("filter/{q?}/{rating?}/{minPrice?}/{maxPrice?}/{instructorIds?}/{sortBy?}")]
-        [HttpGet("filter/{q?}/{rating?}/{minPrice?}/{maxPrice?}/{instructorIds?}/{sortBy?}")]
-
-        public async Task<List<CourseListDto>>? GetFilterCourse(string? q, decimal? rating, decimal? minPrice, decimal? maxPrice, int? sortBy)
+        [HttpPost("filter")]
+        public async Task<CourseListFilter>? GetFilterCourse([FromBody] FilterCourseItem item)
         {
-            var courseList = await _courseManager.GetCourseWithFilter(q, rating, minPrice, maxPrice,new int[] { }, sortBy);
+            var courseList = await _courseManager.GetCourseWithFilter(item);
+            var courseAll =  _courseManager.GetAll();
+
             var courseMapper = _mapper.Map<List<CourseListDto>>(courseList);
-            return courseMapper;
+            var cs = new CourseListFilter
+            {
+                Courses = courseMapper,
+                MaxPrice = courseAll.Max(c=>c.Price)
+            };
+            return cs;
         }
 
 

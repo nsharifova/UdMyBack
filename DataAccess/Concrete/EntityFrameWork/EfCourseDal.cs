@@ -60,7 +60,7 @@ namespace DataAccess.Concrete.EntityFrameWork
 
         }
 
-        public async Task<List<Course>> FilterCourse(string? searchTerm, decimal? rating, decimal? minPrice, decimal? maxPrice, int[] instructorIds,int? sortBy)
+        public async Task<List<Course>> FilterCourse(FilterCourseItem item)
         {
             using UdMyDbContext context = new();
             var myCourses =  context.Courses
@@ -68,37 +68,38 @@ namespace DataAccess.Concrete.EntityFrameWork
                 .Include(c => c.Category)
                 .AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(searchTerm) && searchTerm!=null)
+            if (!string.IsNullOrWhiteSpace(item.Q) && item.Q != null)
             {
-                myCourses = myCourses.Where(c => c.Name.Contains(searchTerm)
-             || c.Category.Name.Contains(searchTerm)
-             || c.Instructor.FullName.Contains(searchTerm));
+                myCourses = myCourses.Where(c => c.Name.Contains(item.Q)
+             || c.Category.Name.Contains(item.Q)
+             || c.Instructor.FullName.Contains(item.Q));
             }
           
-            if(minPrice.HasValue && maxPrice.HasValue)
+            if(item.MinPrice.HasValue && item.MaxPrice.HasValue)
             {
-                myCourses = myCourses.Where(c => c.Price >= minPrice && c.Price <= maxPrice);
+                myCourses = myCourses.Where(c => c.Price >= item.MinPrice && c.Price <= item.MaxPrice);
             }
-            if (rating.HasValue)
+            if (item.Rating.HasValue)
             {
-                myCourses = rating.Value switch
+                myCourses = item.Rating.Value switch
                 {
-                    1 => myCourses.Where(c => c.Reyting >= 1 && c.Reyting <= 2),
-                    2 => myCourses.Where(c => c.Reyting >= 2 && c.Reyting <= 3),
-                    3 => myCourses.Where(c => c.Reyting >= 3 && c.Reyting <= 4),
-                    4 => myCourses.Where(c => c.Reyting >= 4 && c.Reyting <= 5),
+                    1 => myCourses.Where(c => c.Reyting >= 1 && c.Reyting < 2),
+                    2 => myCourses.Where(c => c.Reyting >= 2 && c.Reyting < 3),
+                    3 => myCourses.Where(c => c.Reyting >= 3 && c.Reyting < 4),
+                    4 => myCourses.Where(c => c.Reyting >= 4 && c.Reyting < 5),
+                    5 => myCourses.Where(c => c.Reyting==5),
                     _ => myCourses.Where(c => c.Reyting >= 1 && c.Reyting <= 5),
                 };
             }
 
-            if (instructorIds.Length > 0)
+            if (item.InstructorIds.Count> 0)
             {
-                myCourses = myCourses.Where(c => instructorIds.Contains(c.InstructorId));
+                myCourses = myCourses.Where(c => item.InstructorIds.Contains(c.InstructorId));
             }
 
-            if (sortBy.HasValue)
+            if (item.SortBy.HasValue)
             {
-                myCourses = sortBy.Value switch
+                myCourses = item.SortBy.Value switch
                 {
                     0 => myCourses.OrderByDescending(c => c.Price),
                     1 => myCourses.OrderBy(c => c.Price),
