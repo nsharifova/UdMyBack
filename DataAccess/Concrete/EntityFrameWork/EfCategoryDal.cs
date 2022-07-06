@@ -2,6 +2,7 @@
 using DataAccess.Abstract;
 using Entites;
 using Entites.DTOs;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,23 @@ namespace DataAccess.Concrete.EntityFrameWork
 
         }
 
+        public async Task<List<Category>> GetCategoryWithParents()
+        {
+            using UdMyDbContext context = new();
+            return await context.Categories.Where(c => !c.IsDeleted).Include(c => c.ParentCategory).ToListAsync();
+
+
+        }
+        public async Task<Category>? GetById(int categoryId)
+        {
+            using UdMyDbContext context = new();
+            return await context.Categories.
+                Include(c=> c.ParentCategory).
+                FirstOrDefaultAsync(c=> c.Id == categoryId);
+
+
+
+        }
         public List<CategoryWithChildernDTO> GetCategoryWithChildrens()
         {
             var categoryList = GetDTOCategories();

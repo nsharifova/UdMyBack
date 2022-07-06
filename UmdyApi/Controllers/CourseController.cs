@@ -75,7 +75,7 @@ namespace UdmyApi.Controllers
             {
                 var _mapperCourse=_mapper.Map<Course>(course);
                 _courseManager.Add(_mapperCourse);
-                res.Value = new { status = 200, success = course };
+                res.Value = new { status = 200, message = "course added successfully" };
             }
             catch (Exception e)
             {
@@ -104,8 +104,31 @@ namespace UdmyApi.Controllers
         
         // DELETE api/<CourseController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public JsonResult Delete(int? id)
         {
+            JsonResult res = new(new { });
+
+            if (!id.HasValue)
+            {
+                res.Value = new{ status=404};
+                return res;
+            }
+
+            try
+            {
+                _courseManager.Remove(id.Value);
+                res.Value = new { status = 200 };
+
+            }
+            catch (Exception e)
+            {
+                res.Value = new { status = 403,message=e.Message };
+
+            }
+
+
+            return res;
+          
         }
     }
 }

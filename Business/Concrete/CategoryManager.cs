@@ -36,11 +36,21 @@ namespace Business.Concrete
             return _dal.GetCategoryWithChildrens();
         }
 
+
+        public async Task<List<Category>> GetCategoryWithParents()
+        {
+            return await _dal.GetCategoryWithParents();
+        }
+
         public List<CategoryListDTO> GetChildrenByParentId(int parentId)
         {
             return _dal.GetCategoryChildrenByID(parentId);
         }
 
+        public async Task<Category> GetCategoryById(int categoryId)
+        {
+            return await _dal.GetById(categoryId);
+        }
         public void Remove(int id)
         {
             var findCategory = _dal.Get(c => c.Id == id);

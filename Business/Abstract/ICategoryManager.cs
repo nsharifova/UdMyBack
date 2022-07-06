@@ -11,6 +11,9 @@ namespace Business.Abstract
     public interface ICategoryManager
     {
         List<CategoryWithChildernDTO> GetAll();
+        Task<List<Category>> GetCategoryWithParents();
+
+        Task<Category> GetCategoryById(int categoryId);
         List<CategoryListDTO> GetChildrenByParentId(int parentId);
         void Add(CategoryDTO categoryDTO);
         void Update(Category category);

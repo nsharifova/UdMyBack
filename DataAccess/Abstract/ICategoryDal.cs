@@ -14,5 +14,7 @@ namespace DataAccess.Abstract
         List<CategoryListDTO> GetDTOCategories();
         List<CategoryWithChildernDTO> GetCategoryWithChildrens();
         List<CategoryListDTO> GetCategoryChildrenByID(int parentId);
+        Task<List<Category>> GetCategoryWithParents();
+        Task<Category> GetById(int categoryId);
     }
 }

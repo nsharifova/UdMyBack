@@ -36,7 +36,6 @@ namespace UdmyApi.Controllers
         {
             return new string[] { "value1", "value2" };
         }
-
         // GET api/<AccountController>/5
         [HttpGet("{id}")]
         public string Get(int id)
